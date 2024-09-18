@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
 #include "Node.hpp"
 
 #define INF 0xffff
@@ -95,6 +96,7 @@ void dijkstrasAlgorithm(vector<Node*> unvisited, Node* beginning, Node* destinat
 {
     // Initialize distances to infinite
     int* distances = new int[unvisited.size()];
+    unordered_map<Node*, Node*> previous;
     for (Node* node : unvisited) 
     {
         distances[nodeToLetterIndex(node)] = INF;
@@ -142,10 +144,27 @@ void dijkstrasAlgorithm(vector<Node*> unvisited, Node* beginning, Node* destinat
             if (newDist < distances[nodeToLetterIndex(neighbor)]) 
             {
                 distances[nodeToLetterIndex(neighbor)] = newDist;
+                previous[neighbor] = currNode;
             }
         }
     }
 
     // Output the shortest path
     cout << "Shortest path from " << beginning->getNodeLetter() << " to " << destination->getNodeLetter() << " is " << distances[nodeToLetterIndex(destination)] << endl;
+
+    // Print the path
+    for (Node* at = destination; at != nullptr; at = previous[at]) 
+    {
+        path.push_back(at);
+    }
+    reverse(path.begin(), path.end());
+
+    cout << "Path: ";
+    for (Node* node : path) 
+    {
+        cout << node->getNodeLetter() << " ";
+    }
+    cout << endl;
+
+    delete[] distances;
 }
