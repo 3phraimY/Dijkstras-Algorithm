@@ -1,5 +1,5 @@
-#ifndef NODE_HPP;
-#define NODE_HPP;
+#ifndef NODE_HPP
+#define NODE_HPP
 
 #include <vector>
 
@@ -22,6 +22,7 @@ class Node {
         char getNodeLetter() {return this->nodeLetter;};
         std::vector<Edge> getEdges() {return this->edges;};
         void addEdge(Node* neighbor, int distance);
+        int getIndexOfNode(Node* neighbor);
 };
 
 #endif
